@@ -1,0 +1,49 @@
+import Vue from 'vue'
+import Router, {Route} from 'vue-router'
+import Home from '@/components/home/Home.vue'
+import Playground from '@/components/Playground.vue'
+// import { Toast } from 'buefy/dist/components/toast'
+const { Toast } = require('buefy/dist/components/toast')
+
+Vue.use(Router)
+
+export default new Router({
+    mode: 'history',
+    routes: [
+        { path: '/', component: Home },
+        { path: '/playground', component: Playground },
+        {
+            path: '/redirect',
+            redirect: (to: Route) => {
+                if (to.query.successful === 'true') {
+                    Toast.open({
+                        message: 'Something happened correctly!',
+                        type: 'is-success',
+                        duration: 5000,
+                    })
+                } else {
+                    Toast.open({
+                        message: 'Something\'s not good!',
+                        type: 'is-danger',
+                        duration: 5000,
+                    })
+                }
+                const redirect = localStorage.getItem('redirectTo')
+                if (redirect) {
+                    localStorage.removeItem('redirectTo')
+                    return redirect
+                } else {
+                    return '/'
+                }
+            }
+        } ,
+        /*{
+          path: '/about',
+          name: 'about',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () => import(/!* webpackChunkName: "about" *!/ '../../example/views/About.vue'),
+        },*/
+    ],
+})
