@@ -1,24 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val koinVersion: String by project
-val exposedVersion: String by project
-val kotlinLoggingVersion: String by project
-val slf4jApiVersion: String by project
-val hikaricpVersion: String by project
-val testcontainersJunitVersion: String by project
-val ktorCsrfVersion: String by project
-val jasyncVersion: String by project
-val mysqlVersion: String by project
-val postgresVersion: String by project
-
 plugins {
     application
-    kotlin("jvm") version "1.3.50"
-    id("com.moowork.node") version "1.3.1"
-    id("com.github.ben-manes.versions") version "0.25.0"
+    kotlin("jvm") version kotlinVersion
+    id(Plugins.nodeGradle) version Plugins.Versions.nodeGradle // TODO
+    id(Plugins.benManesVersions) version Plugins.Versions.benManesVersions
 }
 
 group = "online.senpai.webo"
@@ -36,44 +22,46 @@ repositories {
 }
 
 dependencies {
-    /*implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")*/
+    // Ktor
+    implementation(Libraries.ktorServerCore)
+    implementation(Libraries.ktorServerNetty)
+    implementation(Libraries.ktorHtmlBuilder)
+    implementation(Libraries.ktorFreemarker)
+    implementation(Libraries.ktorServerHostCommon)
+    implementation(Libraries.ktorLocations)
+    implementation(Libraries.ktorMetrics)
+    implementation(Libraries.ktorServerSessions)
+    implementation(Libraries.ktorWebsockets)
+    implementation(Libraries.ktorAuth)
+    implementation(Libraries.ktorAuthJwt)
+    implementation(Libraries.ktorJackson)
+    implementation(Libraries.mpierceKtorCsrf)
 
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("io.ktor:ktor-server-core:$ktorVersion")
-    implementation("io.ktor:ktor-html-builder:$ktorVersion")
-    implementation("io.ktor:ktor-freemarker:$ktorVersion")
-    implementation("io.ktor:ktor-server-host-common:$ktorVersion")
-    implementation("io.ktor:ktor-locations:$ktorVersion")
-    implementation("io.ktor:ktor-metrics:$ktorVersion")
-    implementation("io.ktor:ktor-server-sessions:$ktorVersion")
-    implementation("io.ktor:ktor-websockets:$ktorVersion")
-    implementation("io.ktor:ktor-auth:$ktorVersion")
-    implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
-    implementation("io.ktor:ktor-jackson:$ktorVersion")
-    
-    implementation("io.ktor:ktor-client-apache:$ktorVersion")
-    implementation("io.ktor:ktor-client-json:$ktorVersion")
-    implementation("io.ktor:ktor-client-jackson:$ktorVersion")
+    // Ktor client
+    implementation(Libraries.ktorClientApache)
+    implementation(Libraries.ktorClientJson)
+    implementation(Libraries.ktorClientJackson)
 
-    implementation("org.mpierce.ktor.csrf:ktor-csrf:$ktorCsrfVersion")
+    // Logging
+    implementation(Libraries.kotlinLogging)
+    implementation(Libraries.logbackClassic)
 
-    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    // Database
+    implementation(Libraries.hikariCP)
+    implementation(Libraries.postgres)
+    implementation(Libraries.exposed)
+    implementation(Libraries.ktormCore)
+    implementation(Libraries.ktormPostgre)
 
-    implementation("com.zaxxer:HikariCP:$hikaricpVersion")
-    implementation("mysql:mysql-connector-java:$mysqlVersion")
-    implementation("org.postgresql:postgresql:$postgresVersion")
-    implementation("org.jetbrains.exposed:exposed:$exposedVersion")
-    implementation("com.github.jasync-sql:jasync-mysql:$jasyncVersion")
+    // Dependency injection
+    implementation(Libraries.koinCore)
+    implementation(Libraries.koinKtor)
+    implementation(Libraries.koinSlf4j)
 
-    implementation("org.koin:koin-core:$koinVersion")
-    implementation("org.koin:koin-ktor:$koinVersion")
-    implementation("org.koin:koin-logger-slf4j:$koinVersion")
-
-    testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
-    testImplementation("org.koin:koin-test:$koinVersion")
-    testImplementation("org.testcontainers:junit-jupiter:$testcontainersJunitVersion")
-    testImplementation("org.testcontainers:nginx:$testcontainersJunitVersion")
+    testImplementation(TestLibraries.ktorServerTests)
+    testImplementation(TestLibraries.koinTest)
+    testImplementation(TestLibraries.testContainersJupiter)
+    testImplementation(TestLibraries.testContainersNginx)
 }
 
 java {
@@ -83,9 +71,9 @@ java {
 
 node {
     download = true
-    version = "10.16.0"
-    npmVersion = "2.1.5"
-    yarnVersion = "1.16.0"
+    version = "12.16.2"
+    npmVersion = "6.14.4"
+    yarnVersion = "1.22.4"
     workDir = file("${project.buildDir}/src/frontend")
     nodeModulesDir = file("${project.projectDir}")
 }
@@ -96,8 +84,13 @@ tasks.withType<KotlinCompile>().all {
     }
 }
 
-kotlin.sourceSets["main"].kotlin.srcDirs("src/backend")
-kotlin.sourceSets["test"].kotlin.srcDirs("test/backend")
-
-sourceSets["main"].resources.srcDirs("resources")
-sourceSets["test"].resources.srcDirs("testresources")
+sourceSets {
+    main {
+        java.srcDirs("src/backend")
+        resources.srcDirs("resources")
+    }
+    test {
+        java.srcDirs("test/backend")
+        resources.srcDirs("testresources")
+    }
+}
