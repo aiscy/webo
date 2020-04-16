@@ -1,1 +1,1 @@
-rootProject.name = "ktor-pastebin"
+rootProject.name = "webo"
