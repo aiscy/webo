@@ -51,6 +51,7 @@ dependencies {
     implementation(Libraries.exposedCore)
     implementation(Libraries.exposedDao)
     implementation(Libraries.exposedJdbc)
+    implementation(Libraries.exposedJavaTime)
     implementation(Libraries.ktormCore)
     implementation(Libraries.ktormPostgre)
 
