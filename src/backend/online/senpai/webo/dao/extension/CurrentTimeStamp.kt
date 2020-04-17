@@ -1,7 +1,7 @@
 package online.senpai.webo.dao.extension
 
 import org.jetbrains.exposed.sql.CustomFunction
-import org.jetbrains.exposed.sql.DateColumnType
-import org.joda.time.DateTime
+/*import org.jetbrains.exposed.sql.DateColumnType*/
+import java.time.LocalDateTime
 
-val currentTimeStamp = CustomFunction<DateTime>("CURRENT_TIMESTAMP", DateColumnType(time = true))
+/*val currentTimeStamp = CustomFunction<LocalDateTime>("CURRENT_TIMESTAMP", DateColumnType(time = true))*/
