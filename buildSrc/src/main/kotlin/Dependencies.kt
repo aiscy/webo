@@ -49,6 +49,7 @@ object Libraries {
     const val exposedCore = "org.jetbrains.exposed:exposed-core:${Versions.exposed}"
     const val exposedDao = "org.jetbrains.exposed:exposed-dao:${Versions.exposed}"
     const val exposedJdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
+    const val exposedJavaTime = "org.jetbrains.exposed:exposed-java-time:${Versions.exposed}"
     const val ktormCore = "me.liuwj.ktorm:ktorm-core:${Versions.ktorm}"
     const val ktormPostgre = "me.liuwj.ktorm:ktorm-support-postgresql:${Versions.ktorm}"
     const val koinCore = "org.koin:koin-core:$koin"
