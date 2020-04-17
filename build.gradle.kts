@@ -8,7 +8,6 @@ plugins {
 }
 
 group = "online.senpai.webo"
-version = "0.0.1"
 
 application {
     mainClassName = "io.ktor.server.netty.EngineMain"
@@ -49,7 +48,10 @@ dependencies {
     // Database
     implementation(Libraries.hikariCP)
     implementation(Libraries.postgres)
-    implementation(Libraries.exposed)
+    implementation(Libraries.exposedCore)
+    implementation(Libraries.exposedDao)
+    implementation(Libraries.exposedJdbc)
+    implementation(Libraries.exposedJavaTime)
     implementation(Libraries.ktormCore)
     implementation(Libraries.ktormPostgre)
 
@@ -93,4 +95,10 @@ sourceSets {
         java.srcDirs("test/backend")
         resources.srcDirs("testresources")
     }
+}
+
+tasks.register<JavaExec>("vlcjTestApp") {
+    group = "playground"
+    main = "online.senpai.owoard.playground.VlcjTestApp"
+    classpath = sourceSets.test.get().runtimeClasspath
 }
