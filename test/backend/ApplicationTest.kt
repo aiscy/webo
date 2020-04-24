@@ -1,14 +1,6 @@
 package online.senpai
 
-import io.ktor.http.HttpMethod
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.testing.handleRequest
-import io.ktor.server.testing.withTestApplication
-import online.senpai.webo.main
-import kotlin.test.Test
-import kotlin.test.assertEquals
-
-class ApplicationTest {
+/*class ApplicationTest {
     @Test
     fun testRoot() {
         withTestApplication({ main(testing = true) }) {
@@ -18,4 +10,4 @@ class ApplicationTest {
             }
         }
     }
-}
+}*/
