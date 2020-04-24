@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+
+  db:
+    image: postgres:11.7
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=dev
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:1.17.9
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/general.conf:/etc/nginx/general.conf:ro
+      - ./nginx/security.conf:/etc/nginx/security.conf:ro
+      - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
+      - ./nginx/senpai.online.conf:/etc/nginx/sites-enabled/senpai.online.conf:ro
+      # - ./../dist:/var/www/q6kfjhnpdimvjhkrk2fm.senpai.online/public:ro
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=q6kfjhnpdimvjhkrk2fm.senpai.online
+      - NGINX_PORT=80
+    command: [nginx-debug, '-g', 'daemon off;']
+    #    command: ["nginx", "-g", "daemon off;"]
+    networks:
+      - backend
+
+  host:
+    image: qoomon/docker-host:2.4.0
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    restart: on-failure
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  db-data:
