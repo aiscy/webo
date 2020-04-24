@@ -1,13 +1,14 @@
 const path = require("path");
 module.exports = {
     devServer: {
-        compress: true,
+        compress: false,
         inline: true,
-        port: '8080',
+        port: '3000',
         allowedHosts: [
             '*'
         ],
-        disableHostCheck: true
+        disableHostCheck: true,
+        clientLogLevel: 'debug'
     },
     chainWebpack: config => {
         config
