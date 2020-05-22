@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     application
     kotlin("jvm") version kotlinVersion
+    /*kotlin("kapt") version kotlinVersion*/
+    kotlin("plugin.serialization") version kotlinVersion
     id(Plugins.nodeGradle) version Plugins.Versions.nodeGradle // TODO
     id(Plugins.benManesVersions) version Plugins.Versions.benManesVersions
 }
@@ -18,6 +20,7 @@ repositories {
     jcenter()
     maven { url = uri("https://kotlin.bintray.com/ktor") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
+    maven { url = uri("https://philanthropist.touk.pl/nexus/content/repositories/releases") }
 }
 
 dependencies {
@@ -34,6 +37,7 @@ dependencies {
     implementation(Libraries.ktorAuth)
     implementation(Libraries.ktorAuthJwt)
     implementation(Libraries.ktorJackson)
+    implementation(Libraries.ktorSerialization)
     implementation(Libraries.mpierceKtorCsrf)
 
     // Ktor client
@@ -52,8 +56,11 @@ dependencies {
     implementation(Libraries.exposedDao)
     implementation(Libraries.exposedJdbc)
     implementation(Libraries.exposedJavaTime)
-    implementation(Libraries.ktormCore)
-    implementation(Libraries.ktormPostgre)
+    /*api(Libraries.krushAnnotationProcessor)
+    kapt(Libraries.krushAnnotationProcessor)
+    api(Libraries.krushRuntime)*/
+    implementation(Libraries.kmongoCoroutine)
+    /*implementation(Libraries.kotlinxSerialization)*/
 
     // Dependency injection
     implementation(Libraries.koinCore)
