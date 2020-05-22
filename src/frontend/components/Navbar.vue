@@ -15,6 +15,9 @@
                 span(aria-hidden='true')
         .navbar-menu(:class="{ 'is-active': isBurgerMenuVisible }")
             .navbar-start
+                router-link.navbar-item(to='/evolve')
+                    b-icon(pack='fas', icon='angry', size='is-medium', custom-size='fa-lg')
+                    span Evolve
                 router-link.navbar-item(to='/pastekode')
                     b-icon(pack='fas', icon='code', size='is-medium', custom-size='fa-lg')
                     span PasteKode
