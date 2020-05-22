@@ -25,10 +25,11 @@ class Dao : DaoFacade, KoinComponent {
     override fun init() {
         transaction(db) {
             SchemaUtils.createMissingTablesAndColumns(
-                CodeLanguagesTable,
+                /*EvolveCharacterLines*/ // TODO
+                /*CodeLanguagesTable,
                 GithubUserIdsTable,
                 PastesTable,
-                UsersTable
+                UsersTable*/
             )
         }
     }
