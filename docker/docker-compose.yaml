@@ -31,6 +31,16 @@ services:
     networks:
       - backend
 
+  mongo:
+    image: mongo:4.2
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    networks:
+      - backend
+
   host:
     image: qoomon/docker-host:2.4.0
     cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
