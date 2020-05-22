@@ -1,5 +1,3 @@
-import org.gradle.internal.impldep.junit.runner.Version.id
-
 const val kotlinVersion = "1.3.72"
 const val ktor = "1.3.2"
 const val koin = "2.1.5"
@@ -8,7 +6,6 @@ object Plugins {
     object Versions {
         const val nodeGradle = "2.2.3"
         const val benManesVersions = "0.28.0"
-
     }
 
     const val nodeGradle = "com.github.node-gradle.node"
@@ -17,13 +14,16 @@ object Plugins {
 
 object Libraries {
     private object Versions {
+        const val pgjdbcNg = "0.8.4"
+        const val krush = "0.2.0"
         const val mpierceKtorCsrf = "0.4.1"
         const val kotlinLogging = "1.7.9"
         const val logback = "1.2.1"
         const val hikariCP = "3.4.2"
         const val postgres = "42.2.12"
         const val exposed = "0.23.1"
-        const val ktorm = "2.7.2"
+        const val kmongo = "4.0.0"
+        const val kotlinxSerialization = "0.20.0"
     }
 
     const val ktorServerCore = "io.ktor:ktor-server-core:$ktor"
@@ -41,20 +41,24 @@ object Libraries {
     const val ktorClientApache = "io.ktor:ktor-client-apache:$ktor"
     const val ktorClientJson = "io.ktor:ktor-client-json:$ktor"
     const val ktorClientJackson = "io.ktor:ktor-client-jackson:$ktor"
+    const val ktorSerialization = "io.ktor:ktor-serialization:$ktor"
     const val mpierceKtorCsrf = "org.mpierce.ktor.csrf:ktor-csrf:${Versions.mpierceKtorCsrf}"
     const val kotlinLogging = "io.github.microutils:kotlin-logging:${Versions.kotlinLogging}"
     const val logbackClassic = "ch.qos.logback:logback-classic:${Versions.logback}"
     const val hikariCP = "com.zaxxer:HikariCP:${Versions.hikariCP}"
     const val postgres = "org.postgresql:postgresql:${Versions.postgres}"
+    const val pgjdbcNg = "com.impossibl.pgjdbc-ng:pgjdbc-ng:${Versions.pgjdbcNg}"
+    const val krushAnnotationProcessor = "pl.touk.krush:annotation-processor:${Versions.krush}"
+    const val krushRuntime = "pl.touk.krush:runtime:${Versions.krush}"
     const val exposedCore = "org.jetbrains.exposed:exposed-core:${Versions.exposed}"
     const val exposedDao = "org.jetbrains.exposed:exposed-dao:${Versions.exposed}"
     const val exposedJdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
     const val exposedJavaTime = "org.jetbrains.exposed:exposed-java-time:${Versions.exposed}"
-    const val ktormCore = "me.liuwj.ktorm:ktorm-core:${Versions.ktorm}"
-    const val ktormPostgre = "me.liuwj.ktorm:ktorm-support-postgresql:${Versions.ktorm}"
     const val koinCore = "org.koin:koin-core:$koin"
     const val koinKtor = "org.koin:koin-ktor:$koin"
     const val koinSlf4j = "org.koin:koin-logger-slf4j:$koin"
+    const val kmongoCoroutine = "org.litote.kmongo:kmongo-coroutine:${Versions.kmongo}"
+    const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinxSerialization}"
 }
 
 object TestLibraries {
