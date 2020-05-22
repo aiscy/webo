@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router, {Route} from 'vue-router'
-import Home from '@/components/home/Home.vue'
-import Playground from '@/components/Playground.vue'
-// import { Toast } from 'buefy/dist/components/toast'
+
 const { Toast } = require('buefy/dist/components/toast')
+
+const Home = () => import('@/components/home/Home.vue')
+const Playground = () => import('@/components/Playground.vue')
+const Evolve = () => import('@/components/evolve/Evolve.vue')
 
 Vue.use(Router)
 
