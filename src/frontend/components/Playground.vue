@@ -14,13 +14,13 @@
                 localStorage.setItem('redirectTo', window.location.pathname)
                 window.location.pathname = '/user/login'
             },
-            info: function() {
+            /*info: function() { // TODO
                 this.$http
                     .get('/user/info')
                     .then(response => {
                         this.$toast.open(response.data)
                     })
-            }
+            }*/
         }
     })
 </script>
