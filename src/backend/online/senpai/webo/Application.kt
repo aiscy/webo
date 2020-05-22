@@ -1,39 +1,34 @@
 package online.senpai.webo
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.sessions.*
 import io.ktor.features.*
-import org.slf4j.event.*
-import com.fasterxml.jackson.databind.*
-import io.ktor.auth.*
-import io.ktor.html.*
-import io.ktor.jackson.*
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import io.ktor.jackson.jackson
+import io.ktor.request.path
+import io.ktor.response.respond
+import io.ktor.routing.route
+import io.ktor.routing.routing
 import io.ktor.server.netty.EngineMain
+import io.ktor.sessions.Sessions
+import io.ktor.sessions.cookie
+import io.ktor.sessions.directorySessionStorage
 import io.ktor.util.KtorExperimentalAPI
-import io.ktor.util.url
-import kotlinx.html.*
-import online.senpai.webo.dao.DaoFacade
 import online.senpai.webo.exception.AuthenticationException
 import online.senpai.webo.exception.AuthorizationException
-import online.senpai.webo.module.daoModule
-import online.senpai.webo.module.mysqlConnectionModule
+import online.senpai.webo.exception.BadRequest
+import online.senpai.webo.module.dbConnectionModule
+import online.senpai.webo.module.repositoryModule
 import online.senpai.webo.module.serviceModule
-import online.senpai.webo.router.dumbcord
-import online.senpai.webo.router.kodebin
-import online.senpai.webo.service.GithubApiV3
-import online.senpai.webo.service.GithubApiV3User
+import online.senpai.webo.router.evolveHandler
 import online.senpai.webo.session.AuthenticatedUser
-import org.koin.Logger.slf4jLogger
 import org.koin.ktor.ext.Koin
-import org.koin.ktor.ext.get as getDependency
-import org.mpierce.ktor.csrf.CsrfProtection
-import org.mpierce.ktor.csrf.HeaderPresent
-import org.mpierce.ktor.csrf.OriginMatchesKnownHost
+import org.koin.logger.SLF4JLogger
+import org.slf4j.event.Level
 import java.io.File
+import kotlin.collections.set
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
@@ -41,12 +36,12 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 fun Application.main() {
     install(Koin) {
-        slf4jLogger()
+        SLF4JLogger()
         modules(
             listOf(
                 serviceModule,
-                mysqlConnectionModule,
-                daoModule
+                repositoryModule,
+                dbConnectionModule
             )
         )
     }
@@ -56,7 +51,7 @@ fun Application.main() {
         validate(HeaderPresent("X-Some-Custom-Header-Your-Frontend-Sends"))
     }*/
 
-    install(Compression) {
+    /*install(Compression) {
         gzip {
             priority = 1.0
         }
@@ -64,7 +59,7 @@ fun Application.main() {
             priority = 10.0
             minimumSize(1024)
         }
-    }
+    }*/
 
     install(AutoHeadResponse)
 
@@ -133,7 +128,7 @@ fun Application.main() {
         }
     }
 
-    install(Authentication) {
+    /*install(Authentication) {
         oauth("githubOauth") {
             client = getDependency()
             providerLookup = { GithubLoginProvider().getLoginProviderSettings(environment.config) }
@@ -143,10 +138,10 @@ fun Application.main() {
             skipWhen { call: ApplicationCall -> call.sessions.get<AuthenticatedUser>() != null }
         }
         session<AuthenticatedUser> {
-            challenge = SessionAuthChallenge.Unauthorized
+            *//*challenge = SessionAuthChallenge.Unauthorized*//*
             validate { principal: AuthenticatedUser -> principal } // TODO
         }
-    }
+    }*/
 
     install(ContentNegotiation) {
         jackson {
@@ -156,7 +151,12 @@ fun Application.main() {
 
     routing {
         if (isDev) trace { application.log.trace(it.buildText()) }
-        authenticate("githubOauth") {
+        route("/api") {
+            route("/evolve") { // TODO
+                evolveHandler()
+            }
+        }
+        /*authenticate("githubOauth") {
             route("/user/login/{type?}") {
                 param("error") {
                     handle {
@@ -204,7 +204,7 @@ fun Application.main() {
         }
         route("/dumbcord") {
             dumbcord()
-        }
+        }*/
 
         install(StatusPages) {
             exception<AuthenticationException> { cause ->
@@ -213,66 +213,23 @@ fun Application.main() {
             exception<AuthorizationException> { cause ->
                 call.respond(HttpStatusCode.Forbidden, cause)
             }
+            exception<BadRequest> { cause ->
+                call.respond(HttpStatusCode.BadRequest /*cause*/)
+            }
         }
     }
 
-    getDependency<DaoFacade>().apply {
+    /*val dataSource: HikariDataSource = getDependency<HikariDataSource>()
+    environment.monitor.subscribe(ApplicationStopping) {
+        dataSource.close()
+    }
+    Database.connect(dataSource)
+    getDependency<OldEvolveRepository>().createTable()*/
+
+    /*getDependency<DaoFacade>().apply {
         environment.monitor.subscribe(ApplicationStopped) { close() }
         init()
-    }
-}
-
-private suspend fun ApplicationCall.loginPage() {
-    respondHtml {
-        head {
-            title { +"Login with" }
-        }
-        body {
-            h1 {
-                +"Login with:"
-            }
-            p {
-                a(href = url { path("user", "login") }) {
-                    +"GitHub OAuth"
-                }
-            }
-        }
-    }
-}
-
-private suspend fun ApplicationCall.loginFailedPage(errors: List<String>) {
-    respondHtml {
-        head {
-            title { +"Login with" }
-        }
-        body {
-            h1 {
-                +"Login error"
-            }
-
-            for (e in errors) {
-                p {
-                    +e
-                }
-            }
-        }
-    }
-}
-
-private suspend fun ApplicationCall.loggedInSuccessResponse(data: GithubApiV3User) {
-    respondHtml {
-        head {
-            title { +"Logged in" }
-        }
-        body {
-            h1 {
-                +"You are logged in"
-            }
-            p {
-                +"Your logged in as $data"
-            }
-        }
-    }
+    }*/
 }
 
 @KtorExperimentalAPI
