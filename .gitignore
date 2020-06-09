@@ -30,3 +30,4 @@ out/
 public/
 ktor-pastebin.iml
 yarn-error.log
+application.conf
