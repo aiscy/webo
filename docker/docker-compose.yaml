@@ -20,7 +20,7 @@ services:
       - ./nginx/security.conf:/etc/nginx/security.conf:ro
       - ./nginx/proxy.conf:/etc/nginx/proxy.conf:ro
       - ./nginx/senpai.online.conf:/etc/nginx/sites-enabled/senpai.online.conf:ro
-      - ./../evolve:/var/www/q6kfjhnpdimvjhkrk2fm.senpai.online/public/assets/evolve:ro
+      - ./../../evolve:/var/www/q6kfjhnpdimvjhkrk2fm.senpai.online/public/assets/evolve:ro
     ports:
       - "80:80"
     environment:
