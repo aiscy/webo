@@ -8,7 +8,7 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 
 private const val DATABASE_NAME = "evolve_lines"
 
-class EvolveRepositoryImpl : MongoCrudRepository<EvolveCharacterLine>, EvolveRepository, KoinComponent {
+class EvolveRepositoryImpl : EvolveRepository, KoinComponent {
     private val client: CoroutineClient by inject()
     private val database: CoroutineDatabase = client.getDatabase(DATABASE_NAME)
 
