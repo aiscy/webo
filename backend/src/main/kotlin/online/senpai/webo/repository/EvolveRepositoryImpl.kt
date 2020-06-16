@@ -1,6 +1,5 @@
 package online.senpai.webo.repository
 
-import online.senpai.webo.domain.EvolveCharacterLine
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.litote.kmongo.coroutine.CoroutineClient
@@ -12,29 +11,39 @@ class EvolveRepositoryImpl : EvolveRepository, KoinComponent {
     private val client: CoroutineClient by inject()
     private val database: CoroutineDatabase = client.getDatabase(DATABASE_NAME)
 
-    override suspend fun create(entity: EvolveCharacterLine): EvolveCharacterLine {
+    override suspend fun create(entity: EvolveDomain): EvolveDomain {
         TODO("not implemented")
     }
 
-    override suspend fun update(entity: EvolveCharacterLine): EvolveCharacterLine {
+    override suspend fun update(entity: EvolveDomain): EvolveDomain {
         TODO("not implemented")
     }
 
-    override suspend fun delete(entity: EvolveCharacterLine): EvolveCharacterLine {
+    override suspend fun delete(entity: EvolveDomain): EvolveDomain {
         TODO("not implemented")
     }
 
-    override suspend fun listAll(): Iterable<EvolveCharacterLine> {
+    override suspend fun listAll(): Iterable<EvolveDomain> {
         return database.listCollectionNames().flatMap { name: String ->
             listAll(name)
         }
     }
 
-    override suspend fun listAll(name: String): Iterable<EvolveCharacterLine> {
-        return database.getCollection<EvolveCharacterLine>(name).find().toList().sortedBy { it.lineName }
+    override suspend fun listSpecific(
+        name: String,
+        startRow: Int,
+        count: Int,
+        sortBy: String,
+        descending: Boolean
+    ): Iterable<EvolveDomain> {
+        return database.getCollection<EvolveDomain>(name).find().skip(startRow).limit(count).toList()
+    }
+
+    override suspend fun listAll(name: String): Iterable<EvolveDomain> {
+        return database.getCollection<EvolveDomain>(name).find().toList().sortedBy { it.lineName }
     }
 
     override suspend fun rowsNumber(name: String): Long {
-        return database.getCollection<EvolveCharacterLine>(name).countDocuments()
+        return database.getCollection<EvolveDomain>(name).countDocuments()
     }
 }

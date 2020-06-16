@@ -2,30 +2,33 @@
   q-page(padding)
     q-ajax-bar(position='bottom', color='purple', size='15px')
     q-table(:pagination.sync='pagination', :data='tableData', :columns='tableColumns', :filter='filter', row-key='id',
-      :loading='loading', @request='fetchData', binary-state-sort, :rows-per-page-options='[25]', dense, flat
+      :loading='loading', binary-state-sort, :rows-per-page-options='[25]', dense, flat
     )
       template(v-slot:body-cell-audio='props')
         q-td(:props='props', auto-width=true)
           .column
             .col(v-for='item in props.row.filePath' :key='item')
               q-media-player(dense, type='audio', :volume='volume', :source='item', preload='none'
-                hide-volume-slider, no-video, cross-origin='anonymous', background-color='deep-purple-3'
+                hide-volume-slider, cross-origin='anonymous', background-color='deep-purple-3'
               )
                 template(v-slot:volume)
                   div
       template(v-if='isDataFetched', v-slot:top-right='props')
-        q-pagination(v-model='pagination.page', color='purple', :max='props.pagesNumber', :max-pages='maxAmountOfPagesAtTime')
+        q-pagination(v-model='pagination.page', color='purple', :max='props.pagesNumber',
+          :max-pages='maxAmountOfPagesAtTime', @input='onRequest', :to-fn='toFn'
+        )
       template(v-if='isDataFetched', v-slot:pagination='props')
-        q-pagination(v-model='pagination.page', color='purple', :max='props.pagesNumber', :max-pages='maxAmountOfPagesAtTime')
+        q-pagination(v-model='pagination.page', color='purple', :max='props.pagesNumber',
+          :max-pages='maxAmountOfPagesAtTime', @input='onRequest', :to-fn='toFn'
+        )
       template(v-if='isDataFetched', v-slot:top-left)
         q-badge(label='Volume')
         q-slider(v-model='volume', :min='0', :max='100', label, style={'width': '200px'})
-
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
-  import {EvolveCharacterLine, Pagination, TableColumns} from 'components/models'
+  import {EvolveCharacterLine, TableColumns} from 'components/models'
   import {AxiosResponse} from 'axios'
   import {QMediaPlayer} from '@quasar/quasar-ui-qmediaplayer'
 
@@ -87,22 +90,50 @@
   },
   methods: {
     async setRowsNumber(): Promise<void> {
-      const response: AxiosResponse<number> = await this.$axios.get<number>('/api/evolve/rowsNumberOf', { params: { name: name } })
+      console.log('setRowsNumber')
+      const name: string = this.$route.params.name
+      const response: AxiosResponse<number> = await this.$axios.get<number>('/api/evolve/rowsNumberOf/' + name) // TODO
       this.pagination.rowsNumber = response.data
     },
-    async fetchData(props): Promise<void> {
-      const name: string | undefined = this.$route.params.name
-      if (!name) {
-        return
-      }
-      this.loading = true // TODO Vuex?
-      const { page, rowsPerPage, sortBy, descending } = props.pagination: Pagination
+    /* async onRequest(props): Promise<void> {
+      console.log('onRequest')
+      const { page, rowsPerPage, sortBy, descending } = props.pagination
       const filter: string = props.filter
+      const startRow: number = (page - 1) * rowsPerPage
+      const data: Array<EvolveCharacterLine> = await this.fetchData(startRow, rowsPerPage, filter)
+      this.tableData.splice(0, this.tableData.length, ...data)
+
+      this.pagination.page = page
+      this.pagination.rowsPerPage = rowsPerPage
+      this.pagination.sortBy = sortBy
+      this.pagination.descending = descending
+    }, */
+    async onRequest(page: number): Promise<void> {
+      this.loading = true
+      const startRow: number = (page - 1) * this.pagination.rowsPerPage
+      const data: Array<EvolveCharacterLine> = await this.fetchData(startRow, this.pagination.rowsPerPage)
+      this.tableData.splice(0, this.tableData.length, ...data)
+
+      this.pagination.page = page
+      this.loading = false
+    },
+    async fetchData(startRow = 0, count = 25, filter = '', sortBy = 'desc', descending = true): Promise<Array<EvolveCharacterLine>> {
+      const name: string = this.$route.params.name
       let response: AxiosResponse<Array<EvolveCharacterLine>>
       try {
-        response = await this.$axios.get<Array<EvolveCharacterLine>>('/api/evolve/linesOf', { params: { name: name } })
+        response = await this.$axios.get<Array<EvolveCharacterLine>>(
+          '/api/evolve/linesOf/' + name, // TODO
+          {
+            params: {
+              startRow: startRow,
+              count: count,
+              sortBy: sortBy,
+              descending: descending
+            }
+          }
+        )
       } catch (error) {
-        this.loading = false
+        // this.loading = false
         this.$q.notify({
           timeout: 10000,
           multiLine: true,
@@ -112,21 +143,33 @@
         })
         throw error
       }
-      this.tableData = response.data // TODO Is it ok?
       this.loading = false
+      return response.data
+    },
+    setupTable(): void {
+      this.setRowsNumber()
+      const page = this.$route.query.page
+      if (page) {
+        this.pagination.page = +page
+      }
+      this.onRequest(this.pagination.page)
     }
   },
   computed: {
     isDataFetched: function(): boolean {
       return this.tableData.length > 0
+    },
+    toFn: function(): Function {
+      return (page: number) => ({ query: { page } })
     }
   },
   watch: {
-    $route: 'fetchData'
+    $route: function() {
+      this.setupTable()
+    }
   },
-  created() {
-    this.setRowsNumber()
-    this.fetchData()
+  mounted() {
+    this.setupTable()
   },
   beforeRouteUpdate(to, from, next) {
     if (this.isDataFetched) {
@@ -136,10 +179,3 @@
   }
 })
 </script>
-
-<style scoped>
-  /*#slider {
-    height: 100px;
-    width: 100px;
-  }*/
-</style>

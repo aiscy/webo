@@ -14,7 +14,7 @@
         EvolveMenuItem(character-name='Alex "Slim"', image-src='statics/icons/evolve/slim.png', to='/evolve/slim')
         EvolveMenuItem(character-name='Caira Diaz', image-src='statics/icons/evolve/caira.png', to='/evolve/caira')
         EvolveMenuItem(character-name='Ðorde “Lazarus” Živkovic', image-src='statics/icons/evolve/lazarus.png', to='/evolve/lazarus')
-        EvolveMenuItem(character-name='E.M.E.T.', image-src='statics/icons/evolve/emet.png', to='/evolve/emet')
+        EvolveMenuItem(character-name='E.M.E.T.', image-src='statics/icons/evolve/emet.png', :to='{ path: "emet", query: {"page": 1} }')
         EvolveMenuItem(character-name='Valerie "Val" Wolski', image-src='statics/icons/evolve/val.png', to='/evolve/val')
         <!--EvolveMenuItem(v-for='chr in medics', :character-name='chr.name', :image-src='chr.imageSrc', :to='chr.to')-->
         q-item-label(header) Trappers
@@ -29,12 +29,6 @@
         EvolveMenuItem(character-name='Kala Kapur', image-src='statics/icons/evolve/tech.png', to='/evolve/tech')
         EvolveMenuItem(character-name='Sunny Yú', image-src='statics/icons/evolve/sunny.png', to='/evolve/sunny')
         EvolveMenuItem(character-name='William Cabot', image-src='statics/icons/evolve/cabot.png', to='/evolve/cabot')
-    <!--      q-item-label(header) Audio settings-->
-    <!--        q-item-->
-    <!--          q-item-section(side)-->
-    <!--            q-icon(color='blue', name='volume_up')-->
-    <!--          q-item-section-->
-    <!--            q-slider(v-model='volume', :min='0', :max='100', label, color='blue')-->
     q-page-container
       router-view
 </template>
@@ -43,9 +37,8 @@
   import Vue from 'vue'
   import TopNavBar from 'components/TopNavBar.vue'
   import EvolveMenuItem from 'components/EvolveMenuItem.vue'
-  /* import { CharacterItemModel } from 'components/models' */
 
-export default Vue.extend({
+  export default Vue.extend({
   name: 'EvolveLayout',
   components: {
     TopNavBar,

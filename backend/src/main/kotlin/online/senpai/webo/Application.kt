@@ -7,6 +7,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
+import io.ktor.locations.Locations
 import io.ktor.request.path
 import io.ktor.response.respond
 import io.ktor.routing.route
@@ -148,6 +149,8 @@ fun Application.main() {
             enable(SerializationFeature.INDENT_OUTPUT)
         }
     }
+
+    install(Locations)
 
     routing {
         if (isDev) trace { application.log.trace(it.buildText()) }
