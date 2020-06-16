@@ -22,7 +22,7 @@ object Libraries {
         const val hikariCP = "3.4.2"
         const val postgres = "42.2.12"
         const val exposed = "0.23.1"
-        const val kmongo = "4.0.0"
+        const val kmongo = "4.0.2"
         const val kotlinxSerialization = "0.20.0"
     }
 
