@@ -10,8 +10,6 @@
  * Boot files are your "main.js"
  **/
 
-import 'quasar/dist/quasar.ie.polyfills.js'
-
 
 import '@quasar/extras/roboto-font/roboto-font.css'
 
@@ -36,7 +34,7 @@ import qboot_Booti18n from 'boot/i18n'
 import qboot_Bootaxios from 'boot/axios'
 
 import qboot_Quasarquasarappextensionqmediaplayersrcbootregisterjs
-    from '@quasar/quasar-app-extension-qmediaplayer/src/boot/register.js'
+  from '@quasar/quasar-app-extension-qmediaplayer/src/boot/register.js'
 
 
 Vue.config.devtools = true
