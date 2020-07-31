@@ -8,6 +8,9 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import mu.KLogger
 import mu.KotlinLogging
+import online.senpai.webo.model.SuccessfulJsonResponse
+import online.senpai.webo.model.evolve.LinesModel
+import online.senpai.webo.model.evolve.RowsNumberModel
 import online.senpai.webo.service.EvolveService
 import org.koin.ktor.ext.inject
 
@@ -26,20 +29,12 @@ fun Route.evolveHandler() {
     val evolveService: EvolveService by inject()
 
     get<RowsNumberOf> {
-        call.respond(evolveService.characterRowsNumber(it.name))
+        val model: RowsNumberModel = evolveService.characterRowsNumber(it.name)
+        call.respond(SuccessfulJsonResponse(data = model))
     }
 
     get<LinesOf> {
-        logger.debug { it }
-        call.respond(evolveService.specificCharacterLines(it.name, it.startRow, it.count, it.sortBy, it.descending))
+        val model: LinesModel = evolveService.characterLines(it.name, it.startRow, it.count, it.sortBy, it.descending)
+        call.respond(SuccessfulJsonResponse(data = model))
     }
-
-    /*get("/linesOf") {
-        val name: String = call.request.queryParameters["name"] ?: throw BadRequest()
-        try {
-            call.respond(evolveService.characterLines(name))
-        } catch (e: IllegalArgumentException) {
-            call.respondText("Unknown character name!")
-        }
-    }*/
 }
