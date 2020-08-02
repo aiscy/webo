@@ -1,9 +1,9 @@
 import {ActionTree} from 'vuex'
-import {StoreInterface} from '../index'
+import {Store} from '../index'
 import {ExampleStateInterface} from './state'
 
-const actions: ActionTree<ExampleStateInterface, StoreInterface> = {
-  someAction (/* context */) {
+const actions: ActionTree<ExampleStateInterface, Store> = {
+  fetchData(/* context */) {
     // your code
   }
 }
