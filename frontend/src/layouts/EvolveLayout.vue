@@ -1,7 +1,7 @@
 <template lang="pug">
   q-layout(view='hHh Lpr fFf')
     q-header(elevated)
-      TopNavBar
+      TopNavBar(show-left-drawer-button)
     q-drawer(v-model='leftDrawer', show-if-above, :width='250', :breakpoint='700', elevated)
       q-list
         q-item-label(header) Assaults
@@ -14,7 +14,7 @@
         EvolveMenuItem(character-name='Alex "Slim"', image-src='statics/icons/evolve/slim.png', to='/evolve/slim')
         EvolveMenuItem(character-name='Caira Diaz', image-src='statics/icons/evolve/caira.png', to='/evolve/caira')
         EvolveMenuItem(character-name='Ðorde “Lazarus” Živkovic', image-src='statics/icons/evolve/lazarus.png', to='/evolve/lazarus')
-        EvolveMenuItem(character-name='E.M.E.T.', image-src='statics/icons/evolve/emet.png', :to='{ path: "emet", query: {"page": 1} }')
+        EvolveMenuItem(character-name='E.M.E.T.', image-src='statics/icons/evolve/emet.png', to='/evolve/emet')
         EvolveMenuItem(character-name='Valerie "Val" Wolski', image-src='statics/icons/evolve/val.png', to='/evolve/val')
         <!--EvolveMenuItem(v-for='chr in medics', :character-name='chr.name', :image-src='chr.imageSrc', :to='chr.to')-->
         q-item-label(header) Trappers
@@ -37,23 +37,20 @@
   import Vue from 'vue'
   import TopNavBar from 'components/TopNavBar.vue'
   import EvolveMenuItem from 'components/EvolveMenuItem.vue'
+  import {createNamespacedHelpers} from 'vuex'
 
-  export default Vue.extend({
+  const { mapState } = createNamespacedHelpers('evolveLayout')
+
+export default Vue.extend({
   name: 'EvolveLayout',
   components: {
     TopNavBar,
     EvolveMenuItem
   },
-  data: function() {
-    const leftDrawer = true
-    /* const medics: Array<CharacterItemModel> = [
-      {
-        name: 'E.M.E.T',
-        imageSrc: 'statics/icons/evolve/emet.png',
-        to: '/evolve/emet'
-      }
-    ] */
-    return { leftDrawer }
+  computed: {
+    ...mapState([
+      'leftDrawer'
+    ])
   }
 })
 </script>

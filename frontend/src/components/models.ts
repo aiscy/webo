@@ -7,11 +7,10 @@ export interface Meta {
   totalCount: number
 }
 
-export interface EvolveCharacterLine {
-  id: number
-  lineName: string
-  lineText: string
-  filePath: string[]
+export interface EvolveLinesModel {
+  name: string
+  text: string
+  files: Array<string>
 }
 
 export interface TableColumns { // TODO
@@ -92,4 +91,18 @@ export interface Pagination {
    * For server-side fetching only. How many total database rows are there to be added to the table. If set, causes the QTable to emit @request when data is required.
    */
   rowsNumber: number
+}
+
+export interface JsonResponse<T> {
+  data?: T
+  message?: string
+  success: boolean
+}
+
+export interface EvolveJsonRowsNumber {
+  rowsNumber: number
+}
+
+export interface EvolveJsonLines {
+  lines: Array<EvolveLinesModel>
 }
