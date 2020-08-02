@@ -1,6 +1,6 @@
 import {route} from 'quasar/wrappers'
 import VueRouter from 'vue-router'
-import {StoreInterface} from '../store'
+import {Store} from '../store'
 import routes from './routes'
 
 /*
@@ -8,11 +8,11 @@ import routes from './routes'
  * directly export the Router instantiation
  */
 
-export default route<StoreInterface>(function ({ Vue }) {
+export default route<Store>(function({ Vue }) {
   Vue.use(VueRouter)
 
   return new VueRouter({
-    scrollBehavior: () => ({x: 0, y: 0}),
+    scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
 
     // quasar.conf.js -> build -> vueRouterMode

@@ -31,15 +31,15 @@ export default Vue.extend({
     ...mapActions([
       'toggleLeftDrawer'
     ]),
-    buttonProps({ href, route, isActive, isExactActive }) { // TODO
+    buttonProps(x: { href: string; isActive: boolean }) {
       const props = {
         color: '',
         noCaps: false,
         outline: false,
-        to: href
+        to: x.href
       }
 
-      if (isActive === true) {
+      if (x.isActive) {
         props.color = 'deep-purple'
       }
       return props

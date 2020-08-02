@@ -16,9 +16,9 @@
   import {computed, defineComponent, PropType, ref} from '@vue/composition-api'
   import {Meta, Todo} from './models'
 
-  function useClickCount () {
+  function useClickCount() {
   const clickCount = ref(0)
-  function increment () {
+  function increment() {
     clickCount.value += 1
     return clickCount.value
   }
@@ -26,7 +26,7 @@
   return { clickCount, increment }
 }
 
-function useDisplayTodo (todos: Todo[]) {
+function useDisplayTodo(todos: Todo[]) {
   const todoCount = computed(() => todos.length)
   return { todoCount }
 }
@@ -50,7 +50,7 @@ export default defineComponent({
       type: Boolean
     }
   },
-  setup ({ todos }) {
+  setup({ todos }) {
     return { ...useClickCount(), ...useDisplayTodo(todos) }
   }
 })
