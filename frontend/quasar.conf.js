@@ -10,7 +10,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 const { configure } = require('quasar/wrappers')
 
-module.exports = configure(function (ctx) {
+module.exports = configure(function(ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -88,7 +88,7 @@ module.exports = configure(function (ctx) {
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
-      extendWebpack (cfg) {
+      extendWebpack(cfg) {
         cfg.module.rules.push({
           test: /\.pug$/,
           loader: 'pug-plain-loader'
@@ -201,7 +201,7 @@ module.exports = configure(function (ctx) {
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
       nodeIntegration: true,
 
-      extendWebpack (/* cfg */) {
+      extendWebpack(/* cfg */) {
         // do something with Electron main process Webpack cfg
         // chainWebpack also available besides this extendWebpack
       }

@@ -23,7 +23,7 @@
     TopNavBar
   },
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
       essentialLinks: [

@@ -1,7 +1,7 @@
 <template lang="pug">
   q-layout(view='hHh Lpr fFf')
     q-header(elevated)
-      TopNavBar
+      TopNavBar(show-left-drawer-button)
     q-drawer(v-model='leftDrawer', show-if-above, :width='250', :breakpoint='700', elevated)
       q-list
         q-item-label(header) Assaults
@@ -29,12 +29,6 @@
         EvolveMenuItem(character-name='Kala Kapur', image-src='statics/icons/evolve/tech.png', to='/evolve/tech')
         EvolveMenuItem(character-name='Sunny Yú', image-src='statics/icons/evolve/sunny.png', to='/evolve/sunny')
         EvolveMenuItem(character-name='William Cabot', image-src='statics/icons/evolve/cabot.png', to='/evolve/cabot')
-    <!--      q-item-label(header) Audio settings-->
-    <!--        q-item-->
-    <!--          q-item-section(side)-->
-    <!--            q-icon(color='blue', name='volume_up')-->
-    <!--          q-item-section-->
-    <!--            q-slider(v-model='volume', :min='0', :max='100', label, color='blue')-->
     q-page-container
       router-view
 </template>
@@ -43,7 +37,9 @@
   import Vue from 'vue'
   import TopNavBar from 'components/TopNavBar.vue'
   import EvolveMenuItem from 'components/EvolveMenuItem.vue'
-  /* import { CharacterItemModel } from 'components/models' */
+  import {createNamespacedHelpers} from 'vuex'
+
+  const { mapState } = createNamespacedHelpers('evolveLayout')
 
 export default Vue.extend({
   name: 'EvolveLayout',
@@ -51,16 +47,10 @@ export default Vue.extend({
     TopNavBar,
     EvolveMenuItem
   },
-  data: function() {
-    const leftDrawer = true
-    /* const medics: Array<CharacterItemModel> = [
-      {
-        name: 'E.M.E.T',
-        imageSrc: 'statics/icons/evolve/emet.png',
-        to: '/evolve/emet'
-      }
-    ] */
-    return { leftDrawer }
+  computed: {
+    ...mapState([
+      'leftDrawer'
+    ])
   }
 })
 </script>

@@ -14,5 +14,6 @@ node {
 }
 
 tasks.create<YarnTask>("runDev") {
-    args = listOf("dev")
+    args = listOf("dev", "--mode spa", "--modern")
+    setEnvironment(mapOf("NODE_ENV" to "development"))
 }
