@@ -1,8 +1,7 @@
-import {GetterTree} from 'vuex'
-import {Store} from '../index'
-import {EvolveLayoutState} from './state'
+import { GetterTree } from 'vuex'
+import { Store } from '../index'
+import { EvolveLayoutState } from './state'
 
-const getters: GetterTree<EvolveLayoutState, Store> = {
-}
+const getters: GetterTree<EvolveLayoutState, Store> = {}
 
 export default getters

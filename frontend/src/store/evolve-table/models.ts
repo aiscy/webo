@@ -1,5 +1,5 @@
-import {Model} from '@vuex-orm/core'
-import {AttrField, HasManyField, OrmModel, PrimaryKey} from 'vuex-orm-decorators'
+import { Model } from '@vuex-orm/core'
+import { AttrField, HasManyField, OrmModel, PrimaryKey } from 'vuex-orm-decorators'
 
 @OrmModel('evolveLine')
 export class EvolveLine extends Model {

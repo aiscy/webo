@@ -1,6 +1,6 @@
-import {GetterTree} from 'vuex'
-import {Store} from '../index'
-import {EvolveTableState} from './state'
+import { GetterTree } from 'vuex'
+import { Store } from '../index'
+import { EvolveTableState } from './state'
 
 const getters: GetterTree<EvolveTableState, Store> = {
   hasData(state): boolean {

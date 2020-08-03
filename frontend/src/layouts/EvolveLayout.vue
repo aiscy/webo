@@ -34,12 +34,12 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
-  import TopNavBar from 'components/TopNavBar.vue'
-  import EvolveMenuItem from 'components/EvolveMenuItem.vue'
-  import {createNamespacedHelpers} from 'vuex'
+import Vue from 'vue'
+import TopNavBar from 'components/TopNavBar.vue'
+import EvolveMenuItem from 'components/EvolveMenuItem.vue'
+import { createNamespacedHelpers } from 'vuex'
 
-  const { mapState } = createNamespacedHelpers('evolveLayout')
+const { mapState } = createNamespacedHelpers('evolveLayout')
 
 export default Vue.extend({
   name: 'EvolveLayout',

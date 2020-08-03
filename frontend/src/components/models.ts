@@ -29,39 +29,39 @@ export interface TableColumns { // TODO
   /**
    * If we use visible-columns, this col will always be visible
    */
-  required? : boolean
+  required?: boolean
   /**
    * Horizontal alignment of cells in this column
    */
-  align? : string
+  align?: string
   /**
    * Tell QTable you want this column sortable
    */
-  sortable? : boolean
+  sortable?: boolean
   /**
    * Compare function if you have some custom data or want a specific way to compare two rows
    */
-  sort? : Function
+  sort?: Function
   /**
    * Function you can apply to format your data
    */
-  format? : Function
+  format?: Function
   /**
    * Style to apply on normal cells of the column
    */
-  style? : string
+  style?: string
   /**
    * Classes to add on normal cells of the column
    */
-  classes? : string
+  classes?: string
   /**
    * Style to apply on header cells of the column
    */
-  headerStyle? : string
+  headerStyle?: string
   /**
    * Classes to add on header cells of the column
    */
-  headerClasses? : string
+  headerClasses?: string
 }
 
 export interface CharacterItemModel {

@@ -33,10 +33,10 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
-  import {createNamespacedHelpers} from 'vuex'
+import Vue from 'vue'
+import { createNamespacedHelpers } from 'vuex'
 
-  const { mapState, mapActions, mapGetters } = createNamespacedHelpers('evolveTable')
+const { mapState, mapActions, mapGetters } = createNamespacedHelpers('evolveTable')
 
 export default Vue.extend({
   name: 'EvolveData',

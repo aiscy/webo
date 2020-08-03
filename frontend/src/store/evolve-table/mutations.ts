@@ -1,7 +1,7 @@
-import {MutationTree} from 'vuex'
-import {EvolveTableState} from './state'
-import {EvolveLinesModel} from 'components/models'
-import {InitializePayload} from 'src/store/evolve-table/payloads'
+import { MutationTree } from 'vuex'
+import { EvolveTableState } from './state'
+import { EvolveLinesModel } from 'components/models'
+import { InitializePayload } from 'src/store/evolve-table/payloads'
 
 const mutation: MutationTree<EvolveTableState> = {
   initialize(state, payload: InitializePayload) {

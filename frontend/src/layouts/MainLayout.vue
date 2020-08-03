@@ -12,10 +12,10 @@
 </template>
 
 <script>
-    import EssentialLink from 'components/EssentialLink.vue'
-    import TopNavBar from 'components/TopNavBar.vue'
+import EssentialLink from 'components/EssentialLink.vue'
+import TopNavBar from 'components/TopNavBar.vue'
 
-    export default {
+export default {
   name: 'MainLayout',
 
   components: {

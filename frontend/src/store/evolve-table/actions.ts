@@ -1,10 +1,10 @@
-import {ActionTree} from 'vuex'
-import {Store} from '../index'
-import {EvolveTableState} from './state'
-import Axios, {AxiosResponse} from 'axios'
-import {EvolveJsonLines, EvolveJsonRowsNumber, JsonResponse} from 'components/models'
-import {FetchDataPayload} from 'src/store/evolve-table/payloads'
-import {Notify} from 'quasar'
+import { ActionTree } from 'vuex'
+import { Store } from '../index'
+import { EvolveTableState } from './state'
+import Axios, { AxiosResponse } from 'axios'
+import { EvolveJsonLines, EvolveJsonRowsNumber, JsonResponse } from 'components/models'
+import { FetchDataPayload } from 'src/store/evolve-table/payloads'
+import { Notify } from 'quasar'
 
 function showErrorMessage(): void {
   Notify.create({

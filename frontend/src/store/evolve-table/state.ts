@@ -1,4 +1,4 @@
-import {EvolveLinesModel, Pagination, TableColumns} from 'components/models'
+import { EvolveLinesModel, Pagination, TableColumns } from 'components/models'
 
 export interface EvolveTableState {
   pagination: Pagination

@@ -1,5 +1,5 @@
-import {AttrField, OrmModel} from 'vuex-orm-decorators'
-import {Model} from '@vuex-orm/core'
+import { AttrField, OrmModel } from 'vuex-orm-decorators'
+import { Model } from '@vuex-orm/core'
 
 @OrmModel('generic')
 export class Generic extends Model {

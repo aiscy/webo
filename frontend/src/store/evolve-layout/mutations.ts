@@ -1,5 +1,5 @@
-import {MutationTree} from 'vuex'
-import {EvolveLayoutState} from './state'
+import { MutationTree } from 'vuex'
+import { EvolveLayoutState } from './state'
 
 const mutation: MutationTree<EvolveLayoutState> = {
   toggleLeftDrawer(state) {

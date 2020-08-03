@@ -1,21 +1,21 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
+        title="Example component"
+        active
+        :todos="todos"
+        :meta="meta"
     ></example-component>
   </q-page>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+import Vue from 'vue'
 
-  import ExampleComponent from 'components/CompositionComponent.vue'
-  import {Meta, Todo} from 'components/models'
+import ExampleComponent from 'components/CompositionComponent.vue'
+import { Meta, Todo } from 'components/models'
 
-  export default Vue.extend({
+export default Vue.extend({
   name: 'PageIndex',
   components: { ExampleComponent },
   data() {

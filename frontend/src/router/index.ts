@@ -1,6 +1,6 @@
-import {route} from 'quasar/wrappers'
+import { route } from 'quasar/wrappers'
 import VueRouter from 'vue-router'
-import {Store} from '../store'
+import { Store } from '../store'
 import routes from './routes'
 
 /*

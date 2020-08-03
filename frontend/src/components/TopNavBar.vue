@@ -14,10 +14,10 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
-  import {createNamespacedHelpers} from 'vuex'
+import Vue from 'vue'
+import { createNamespacedHelpers } from 'vuex'
 
-  const { mapActions } = createNamespacedHelpers('evolveLayout')
+const { mapActions } = createNamespacedHelpers('evolveLayout')
 
 export default Vue.extend({
   name: 'TopNavBar',

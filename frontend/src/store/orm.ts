@@ -1,7 +1,7 @@
 import axios from 'axios'
 import VuexORM from '@vuex-orm/core'
 import VuexORMAxios from '@vuex-orm/plugin-axios'
-import {EvolveModel} from 'src/store/evolve-table/models'
+import { EvolveModel } from 'src/store/evolve-table/models'
 
 VuexORM.use(VuexORMAxios, { axios })
 

@@ -13,11 +13,12 @@
 </template>
 
 <script lang="ts">
-  import {computed, defineComponent, PropType, ref} from '@vue/composition-api'
-  import {Meta, Todo} from './models'
+import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
+import { Meta, Todo } from './models'
 
-  function useClickCount() {
+function useClickCount() {
   const clickCount = ref(0)
+
   function increment() {
     clickCount.value += 1
     return clickCount.value

@@ -1,11 +1,11 @@
-import {store} from 'quasar/wrappers'
+import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 
 import evolveTable from './evolve-table'
-import {EvolveTableState} from './evolve-table/state'
+import { EvolveTableState } from './evolve-table/state'
 
 import evolveLayout from './evolve-layout'
-import {EvolveLayoutState} from './evolve-layout/state'
+import { EvolveLayoutState } from './evolve-layout/state'
 
 export interface Store {
   evolveTable: EvolveTableState
